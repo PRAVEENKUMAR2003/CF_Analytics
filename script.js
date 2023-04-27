@@ -8,6 +8,7 @@
       .then(data => {
 
         const tags = {};
+        const language = {};
         // Levels of the user
         let problem_count = {
           A: 0,
@@ -31,9 +32,17 @@
             if (problem_index in problem_count) {
               problem_count[problem_index]++;
             }
+
           }
+          //Language of the user
+          const pl = submission.programmingLanguage;
+          if(language[pl])
+            language[pl]++;
+          else
+            language[pl] = 1;
         
         }
+        console.log(language);
 
 
         let labels = Object.keys(problem_count);
@@ -114,6 +123,47 @@
 
             },
         });
+
+        //Language of the user
+        let LangLabel = Object.keys(language);
+        let LangData = Object.values(language);
+
+        let ctz = document.getElementById('lang-chart').getContext('2d');
+
+        let LangChart = new Chart(ctz, {
+            type : 'pie',
+            data : {
+                labels: LangLabel,
+                datasets: [{
+                    // label: 'Problems Solved',
+                    data: LangData,
+                    radius: '70%',
+                    borderAlign: 'inner',
+                    // animateScale: true,
+
+                    // backgroundColor: [
+                    //   'rgba(255, 99, 132, 0.2)',
+                    //   'rgba(54, 162, 235, 0.2)',
+                    //   'rgba(255, 206, 86, 0.2)',
+                    //   'rgba(75, 192, 192, 0.2)',
+                    //   'rgba(153, 102, 255, 0.2)',
+                    //   'rgba(255, 159, 64, 0.2)'
+                    // ],
+                    // borderColor: [
+                    //   'rgba(255, 99, 132, 1)',
+                    //   'rgba(54, 162, 235, 1)',
+                    //   'rgba(255, 206, 86, 1)',
+                    //   'rgba(75, 192, 192, 1)',
+                    //   'rgba(153, 102, 255, 1)',
+                    //   'rgba(255, 159, 64, 1)'
+                    // ],
+                    // borderWidth: 1
+                  }]
+
+
+            },
+        });
+
 
       })
       .catch(error => console.error(error));
