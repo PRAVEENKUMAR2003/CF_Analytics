@@ -1,6 +1,5 @@
-// const { Chart } = require("chart.js");
 
-    const handle = 'demoralizer';
+    const handle = 'v1p3r_jr';
 
     const api_url = `https://codeforces.com/api/user.status?handle=${handle}&from=1&count=100000`;
 
@@ -10,8 +9,6 @@
 
         const tags = {};
         const language = {};
-        const verdicts = {};
-        const ratings = {};
         // Levels of the user
         let problem_count = {
           A: 0,
@@ -36,32 +33,13 @@
               problem_count[problem_index]++;
             }
 
-            //Ratings of the user
-            const rt = submission.problem.rating;
-            if(ratings[rt])
-              ratings[rt]++;
-            else
-              ratings[rt] = 1;
-
+            //Language of the user
+            // submission.programmingLanguage((pl) => {
+            //   language[pl] = language[pl] + 1;
+            // });
           }
-          //Language of the user
-          const pl = submission.programmingLanguage;
-          if(language[pl])
-            language[pl]++;
-          else
-            language[pl] = 1;
-
-          //Verdicts of the user
-          const vr = submission.verdict;
-          if(verdicts[vr])
-            verdicts[vr]++;
-          else
-            verdicts[vr] = 1;
-
-
         
         }
-        console.log(language);
 
 
         let labels = Object.keys(problem_count);
@@ -108,44 +86,44 @@
 
         //Tags of the user
         
-        let TagLabel = Object.keys(tags);
-        let TagData = Object.values(tags);
+        // let TagLabel = Object.keys(tags);
+        // let TagData = Object.values(tags);
 
-        let cty = document.getElementById('tag-chart').getContext('2d');
+        // let cty = document.getElementById('tag-chart').getContext('2d');
 
-        let TagChart = new Chart(cty, {
-            type : 'doughnut',
-            data : {
-                labels: TagLabel,
-                datasets: [{
-                    label: 'Problems Solved',
-                    data: TagData,
-                    // backgroundColor: [
-                    //   'rgba(255, 99, 132, 0.2)',
-                    //   'rgba(54, 162, 235, 0.2)',
-                    //   'rgba(255, 206, 86, 0.2)',
-                    //   'rgba(75, 192, 192, 0.2)',
-                    //   'rgba(153, 102, 255, 0.2)',
-                    //   'rgba(255, 159, 64, 0.2)'
-                    // ],
-                    // borderColor: [
-                    //   'rgba(255, 99, 132, 1)',
-                    //   'rgba(54, 162, 235, 1)',
-                    //   'rgba(255, 206, 86, 1)',
-                    //   'rgba(75, 192, 192, 1)',
-                    //   'rgba(153, 102, 255, 1)',
-                    //   'rgba(255, 159, 64, 1)'
-                    // ],
-                    // borderWidth: 1
-                  }]
+        // let TagChart = new Chart(cty, {
+        //     type : 'doughnut',
+        //     data : {
+        //         labels: TagLabel,
+        //         datasets: [{
+        //             label: 'Problems Solved',
+        //             data: TagData,
+        //             // backgroundColor: [
+        //             //   'rgba(255, 99, 132, 0.2)',
+        //             //   'rgba(54, 162, 235, 0.2)',
+        //             //   'rgba(255, 206, 86, 0.2)',
+        //             //   'rgba(75, 192, 192, 0.2)',
+        //             //   'rgba(153, 102, 255, 0.2)',
+        //             //   'rgba(255, 159, 64, 0.2)'
+        //             // ],
+        //             // borderColor: [
+        //             //   'rgba(255, 99, 132, 1)',
+        //             //   'rgba(54, 162, 235, 1)',
+        //             //   'rgba(255, 206, 86, 1)',
+        //             //   'rgba(75, 192, 192, 1)',
+        //             //   'rgba(153, 102, 255, 1)',
+        //             //   'rgba(255, 159, 64, 1)'
+        //             // ],
+        //             // borderWidth: 1
+        //           }]
 
 
-            },
-        });
+        //     },
+        // });
 
         //Language of the user
-        let LangLabel = Object.keys(language);
-        let LangData = Object.values(language);
+        let LangLabel = Object.keys(programmingLanguage);
+        let LangData = Object.values(programmingLanguage);
 
         let ctz = document.getElementById('lang-chart').getContext('2d');
 
@@ -154,12 +132,8 @@
             data : {
                 labels: LangLabel,
                 datasets: [{
-                    // label: 'Problems Solved',
+                    label: 'Problems Solved',
                     data: LangData,
-                    radius: '60%',
-                    // borderAlign: 'inner',
-                    // animateScale: true,
-
                     // backgroundColor: [
                     //   'rgba(255, 99, 132, 0.2)',
                     //   'rgba(54, 162, 235, 0.2)',
@@ -182,44 +156,6 @@
 
             },
         });
-
-        //Verdicts of the user
-
-        let VerdictLabel = Object.keys(verdicts);
-        let VerdictData = Object.values(verdicts);
-
-        let ctty = document.getElementById('verdict-graph').getContext('2d');
-
-        let VerdChart = new Chart(ctty, {
-          type : 'pie',
-          data : {
-            labels : VerdictLabel,
-            datasets : [{
-              data : VerdictData,
-              radius : '64%',
-            }]
-          }
-        });
-
-        //Problem rating of user
-
-        let RatingLabel = Object.keys(ratings);
-        let RatingData = Object.values(ratings);
-
-        let ctte = document.getElementById('rating-graph').getContext('2d');
-
-        let RatingChart = new Chart(ctte, {
-          type : 'bar',
-          data : {
-            labels : RatingLabel,
-            datasets : [{
-              data : RatingData,
-              label : 'Problems Solved',
-            }]
-          }
-        });
-
-
 
 
       })
