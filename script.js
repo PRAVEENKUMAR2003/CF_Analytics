@@ -1,14 +1,26 @@
 // const { Chart } = require("chart.js");
 
-    const handle = 'demoralizer';
+console.log("SCRIPT.jS FILE loaded");
 
-    const api_url = `https://codeforces.com/api/user.status?handle=${handle}&from=1&count=100000`;
+const params = new Proxy(new URLSearchParams(window.location.search), {
+  get: (searchParams, prop) => searchParams.get(prop),
+});
+// Get the value of "some_key" in eg "https://example.com/?some_key=some_value"
+let handle1 = params.handle; // "some_value"
+console.log(handle1);
 
-    fetch(api_url)
-      .then(response => response.json())
-      .then(data => {
+// const displayCF = () => {
+  console.log("DisplayCF method executed")
+  // const handle = document.getElementById('input-handle').value;
+  // console.log(handle);
 
-        const tags = {};
+  const api_url = `https://codeforces.com/api/user.status?handle=${handle1}&from=1&count=100000`;
+  
+  fetch(api_url)
+  .then(response => response.json())
+  .then(data => {
+    
+    const tags = {};
         const language = {};
         const verdicts = {};
         const ratings = {};
@@ -21,54 +33,54 @@
           E: 0,
           F: 0,
         };
-
+        
         for (let submission of data.result) {
           if (submission.verdict === 'OK') {
 
             //Tags of the user
             submission.problem.tags.forEach((tag) => {
-                tags[tag] = (tags[tag] || 0) + 1;
-              });
-
+              tags[tag] = (tags[tag] || 0) + 1;
+            });
+            
             //Levels of the user
             let problem_index = submission.problem.index;
             if (problem_index in problem_count) {
               problem_count[problem_index]++;
             }
-
+            
             //Ratings of the user
             const rt = submission.problem.rating;
             if(ratings[rt])
-              ratings[rt]++;
+            ratings[rt]++;
             else
-              ratings[rt] = 1;
-
+            ratings[rt] = 1;
+            
           }
           //Language of the user
           const pl = submission.programmingLanguage;
           if(language[pl])
-            language[pl]++;
+          language[pl]++;
           else
-            language[pl] = 1;
-
+          language[pl] = 1;
+          
           //Verdicts of the user
           const vr = submission.verdict;
           if(verdicts[vr])
-            verdicts[vr]++;
+          verdicts[vr]++;
           else
-            verdicts[vr] = 1;
-
+          verdicts[vr] = 1;
+          
 
         
         }
         console.log(language);
-
-
+        
+        
         let labels = Object.keys(problem_count);
         let bata = Object.values(problem_count);
-
+        
         let ctx = document.getElementById('level-chart').getContext('2d');
-
+        
         let Levelchart = new Chart(ctx, {
           type: 'bar',
           data: {
@@ -112,12 +124,12 @@
         let TagData = Object.values(tags);
 
         let cty = document.getElementById('tag-chart').getContext('2d');
-
+        
         let TagChart = new Chart(cty, {
             type : 'doughnut',
             data : {
-                labels: TagLabel,
-                datasets: [{
+              labels: TagLabel,
+              datasets: [{
                     label: 'Problems Solved',
                     data: TagData,
                     // backgroundColor: [
@@ -141,27 +153,27 @@
 
 
             },
-        });
+          });
 
         //Language of the user
         let LangLabel = Object.keys(language);
         let LangData = Object.values(language);
-
+        
         let ctz = document.getElementById('lang-chart').getContext('2d');
-
+        
         let LangChart = new Chart(ctz, {
             type : 'pie',
             data : {
-                labels: LangLabel,
+              labels: LangLabel,
                 datasets: [{
-                    // label: 'Problems Solved',
+                  // label: 'Problems Solved',
                     data: LangData,
                     radius: '60%',
                     // borderAlign: 'inner',
                     // animateScale: true,
-
+                    
                     // backgroundColor: [
-                    //   'rgba(255, 99, 132, 0.2)',
+                      //   'rgba(255, 99, 132, 0.2)',
                     //   'rgba(54, 162, 235, 0.2)',
                     //   'rgba(255, 206, 86, 0.2)',
                     //   'rgba(75, 192, 192, 0.2)',
@@ -180,16 +192,16 @@
                   }]
 
 
-            },
+                },
         });
 
         //Verdicts of the user
-
+        
         let VerdictLabel = Object.keys(verdicts);
         let VerdictData = Object.values(verdicts);
-
+        
         let ctty = document.getElementById('verdict-graph').getContext('2d');
-
+        
         let VerdChart = new Chart(ctty, {
           type : 'pie',
           data : {
@@ -220,7 +232,9 @@
         });
 
 
-
-
+        
+        
       })
       .catch(error => console.error(error));
+
+    // }
