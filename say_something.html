@@ -7,42 +7,112 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="stylesHome.css">
     <link rel="stylesheet" href="stylesSay.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit&display=swap" rel="stylesheet">
+
+    
     <title>Codeforces Visualiser</title>
+    <style>
+        body::-webkit-scrollbar {
+            display: none;
+          }
+        #test {
+            color: #FCBA28;
+            font-size: 20px;
+            margin: 0.55vw;
+            padding: 0.45vw 0.65vw;
+        }
+        #test:hover{
+            color: #0f0d0e;
+        }
+        #logo {
+            color: #f9f4da;
+        }
+        #logo:hover {
+            color:#FCBA28;
+        }
+        #toggle {
+            background-color: #f9f4da;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+        }
+        /* button */
+
+        .button {
+            background-color: #FCBA28; /* Green */
+            color: #0f0d0e;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin: 4px 2px;
+            cursor: pointer;
+            transition-duration: 0.5s;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 550;
+        }
+        .button1 {
+            background-color: #0f0d0e; 
+            color: #FCBA28; 
+            border-radius: 5px;
+            border: 2px solid #FCBA28;
+        }
+
+        .button1:hover {
+        background-color: #FCBA28;
+        color: #0f0d0e;
+        }
+        a {
+            color: #FCBA28;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight:bold;
+        }
+        .details{
+            margin-left:auto;
+        }
+        .navbar{
+            padding: 5px 10px;
+        }
+    </style>
+
 </head>
 
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light nav-border fixed-top" style="background-color: #e3f2fd;">
-        <a class="navbar-brand" href="#">Codeforces Visualiser</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+<body style="background:#f9f4da;">
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-light nav-border fixed-top"
+        style="background-color: #0f0d0e; ">
+        <a class="navbar-brand logo" href="#" id="logo">Codeforces Visualiser</a>
+        <button class="navbar-toggler" type="button" id="toggle" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon" ></span>
         </button>
 
-        <div class="collapse navbar-collapse " id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex details">
+        <div class="collapse navbar-collapse nav" id="navbarSupportedContent" >
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex details nav-menu">
+                <li class="nav-item active" >
+                    <a class="nav-link navbar-brand button button1" href="index.html" id="test">
+                        Home <span class="sr-only">(current)</span></a>
+                </li>
                 <li class="nav-item active">
-                    <a class="nav-link navbar-brand" href="index.html">
-                        <img src="home2.png" alt=""> Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link  navbar-brand" href="compare.html">
-                        <img src="compare2.png" alt=""> Compare </a>
+                    <a class="nav-link  navbar-brand button button1" href="compare.html"id="test" >
+                      Compare </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link navbar-brand" href="#">
-                        <img src="saySomething.png" alt=""> Say Something</a>
+                <li class="nav-item active">
+                    <a class="nav-link navbar-brand button button1" href="say_something.html"id="test">
+                       Say Something</a>
                 </li>
-
-
             </ul>
-
-
         </div>
     </nav>
 
@@ -64,7 +134,7 @@
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" style="width:50vw;"></textarea>
             </div>
             <div class="d-flex justify-content-center">
-                <a href="home.html" class="btn btn-primary justify-content-md-end">Submit</a>
+                <button class="button button1">Submit</button>
             </div>
         </form>
     </div>
