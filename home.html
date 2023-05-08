@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit&display=swap" rel="stylesheet">
 
-    <title>Codeforces Visualiser</title>
+    <title>CF Analytics</title>
     <style>
         body::-webkit-scrollbar {
             display: none;
@@ -108,7 +108,7 @@
 
     <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-light nav-border fixed-top"
         style="background-color: #0f0d0e; ">
-        <a class="navbar-brand logo" href="#" id="logo">Codeforces Visualiser</a>
+        <a class="navbar-brand logo" href="#" id="logo">CF Analytics</a>
         <button class="navbar-toggler" type="button" id="toggle" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon" ></span>
@@ -139,7 +139,7 @@
             <div class="col-sm-12 mt-5 mb-5% mb-sm-5" style="width:50vw;">
                 <div class="card" style="border:#a7a2a27a 2px solid;">
                     <div class="card-body">
-                        <h5 class="card-title" style="color: blue;text-align: center;text-decoration: underline;">Username and stars</h5>
+                        <h5 class="card-title" style="color: black;text-align: center;text-decoration: underline;">Username and stars</h5>
 
                     </div>
                 </div>
@@ -150,7 +150,7 @@
             <div class="col-sm-5 mb-3 mb-sm-0" style="float:left;">
                 <div class="card TwoCards" style="height: 80vh;width:38vw;">
                     <div class="card-body">
-                        <h5 class="card-title" style="color: blue;text-align: center;text-decoration: underline;">Verdicts of the user</h5>
+                        <h5 class="card-title" style="color: black;text-align: center;text-decoration: underline;">Verdicts of the user</h5>
                         <canvas id="verdict-graph"></canvas>
                     </div>
                 </div>
@@ -161,7 +161,7 @@
             <div class="col-sm-5 mb-3 mb-sm-0" style="float:right;">
                 <div class="card" style="height: 80vh;width:40vw;">
                     <div class="card-body">
-                        <h5 class="card-title" style="color: blue;text-align: center;text-decoration: underline;">Languages</h5>
+                        <h5 class="card-title" style="color: black;text-align: center;text-decoration: underline;">Languages</h5>
                         <canvas id="lang-chart"></canvas>
 
                     </div>
@@ -172,7 +172,7 @@
             <div class="col-sm-12 mt-5 mb-5% mb-sm-5 mx-auto">
                 <div class="card" style="border:#a7a2a27a 2px solid;height: 85vh;width:40vw;">
                     <div class="card-body">
-                        <h5 class="card-title" style="color: blue;text-align: center;text-decoration: underline;">Tags of user</h5>
+                        <h5 class="card-title" style="color: black;text-align: center;text-decoration: underline;">Tags of user</h5>
                         <canvas id="tag-chart"></canvas>
                     </div>
                 </div>
@@ -183,7 +183,7 @@
             <div class="col-sm-12 mt-3 mb-5% mb-sm-5 mx-auto">
                 <div class="card" style="border:#a7a2a27a 2px solid;height:67vh;width:60vw;">
                     <div class="card-body">
-                        <h5 class="card-title" style="color: blue;text-align: center;text-decoration: underline;">Levels of user</h5>
+                        <h5 class="card-title" style="color: black;text-align: center;text-decoration: underline;">Levels of user</h5>
                         <canvas id="level-chart"></canvas>
 
                     </div>
@@ -195,7 +195,7 @@
             <div class="col-sm-12 mt-3 mb-5% mb-sm-5 mx-auto">
                 <div class="card" style="border:#a7a2a27a 2px solid;height:65vh;width:60vw;">
                     <div class="card-body">
-                        <h5 class="card-title" style="color: blue;text-align: center;text-decoration: underline;">Problem ratings of user</h5>
+                        <h5 class="card-title" style="color: black;text-align: center;text-decoration: underline;">Problem ratings of user</h5>
                         <canvas id="rating-graph"></canvas>
 
                     </div>
@@ -206,35 +206,94 @@
         <div class="row d-flex" style="margin-right:0.2vw;">
             <div class="col-sm-5 mb-3 mb-sm-0">
                 <div class="card" style="width: 30rem;">
-                    <div class="card-header" style="background-color: blue;color: white;">
+                    <div class="card-header" style="background-color: black;color: white;">
                       Some numbers
                     </div>
-                    <ul class="list-group list-group-flush">
+                    <!-- <ul class="list-group list-group-flush">
                       <li class="list-group-item">Tried</li>
                       <li class="list-group-item">Solved</li>
                       <li class="list-group-item">Average Attempts</li>
                       <li class="list-group-item">Max Attempts</li>
                       <li class="list-group-item">Solved with one submission</li>
                       <li class="list-group-item">Max AC(s)</li>
-                    </ul>
+                    </ul> -->
+                    <table>
+                        <thead>
+                          <tr>
+                            <th>Tried</th>
+                            <th id="tried-value"></th>
+                            </tr>
+                            <tr>
+                                <th>Solved</th>
+                                <th id="solved-value"></th>
+                            </tr>
+                            <tr>
+                                <th>Average Attempts</th>
+                                <th id="average-value"></th>
+                            </tr>
+                            <tr>
+                                <th>Max Attempts</th>
+                                <th id="max-value"></th>
+                            </tr>
+                            <tr>
+                                <th>Solved with one submission</th>
+                                <th id="once-value"></th>
+                            </tr>
+                            <tr>
+                                <th>MAX AC(s)</th>
+                                <th id="faltu-value"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          
+                        </tbody>
+                      </table>
+                      
                   </div>
             </div>
             <div class="col-sm-1">
-
             </div>
             <div class="col-sm-5 mb-3 mb-sm-0">
                 <div class="card" style="width: 30rem;">
-                    <div class="card-header" style="background-color: blue;color: white;">
+                    <div class="card-header" style="background-color: black;color: white;">
                       In contests
                     </div>
-                    <ul class="list-group list-group-flush">
+                    <!-- <ul class="list-group list-group-flush">
                       <li class="list-group-item">Number of contests</li>
                       <li class="list-group-item">Best Rank</li>
                       <li class="list-group-item">Worst Rank</li>
                       <li class="list-group-item">Max Up</li>
                       <li class="list-group-item">Max Down</li>
                       <li class="list-group-item">.</li>
-                    </ul>
+                    </ul> -->
+                    <table>
+                        <thead>
+                          <tr>
+                            <th>Number of Contests</th>
+                            <th id="contest-value"></th>
+                            </tr>
+                            <tr>
+                                <th>Best Rank</th>
+                                <th id="best-value"></th>
+                            </tr>
+                            <tr>
+                                <th>Worst Rank</th>
+                                <th id="worst-value"></th>
+                            </tr>
+                            <tr>
+                                <th>Max Up</th>
+                                <th id="chadai-value"></th>
+                            </tr>
+                            <tr>
+                                <th>Max Down</th>
+                                <th id="girna-value"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          
+                        </tbody>
+                      </table>
+                      
                   </div>
             </div>
         </div>
@@ -243,10 +302,14 @@
             <div class="col-sm-12 mt-3 mb-5% mb-sm-5" style="width:50vw;">
                 <div class="card" style="border:#a7a2a27a 2px solid;height:20vh;">
                     <div class="card-body">
+
                         <h5 class="card-title" style="color: blue;text-align: center;text-decoration: underline;">Unsolved questions</h5>
                         <div class="my-5">
                             <p id="unsolved-list"></p>
                           </div>
+
+                       
+
                     </div>
                 </div>
             </div>-->
@@ -262,7 +325,7 @@
             <div class="col-sm-12 mt-3 mb-5% mb-sm-5 mx-auto">
                 <div class="card" style="border:#a7a2a27a 2px solid;height:55vh;width:60vw;">
                     <div class="card-body">
-                        <h5 class="card-title" style="color: blue;text-align: center;text-decoration: underline;">Submissions heat map of user
+                        <h5 class="card-title" style="color: black;text-align: center;text-decoration: underline;">Submissions heat map of user
                         </h5>
 
                     </div>
