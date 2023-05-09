@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Question Heatmap</title>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="script.js"></script>
+</head>
+<body>
+	<canvas id="myChart"></canvas>
+
+	<script>
+		// Sample data
+		var data = {
+			labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+			datasets: [
+				{
+					label: 'Week 1',
+					data: [5, 3, 2, 7, 8],
+					backgroundColor: 'rgba(255, 0, 0, 0.5)',
+					borderColor: 'brown',
+					borderWidth: 1
+				},
+				{
+					label: 'Week 2',
+					data: [4, 2, 1, 6, 7],
+					backgroundColor: 'rgba(255, 165, 0, 0.5)',
+					borderColor: 'pink',
+					borderWidth: 1
+				},
+				{
+					label: 'Week 3',
+					data: [6, 4, 3, 8, 9],
+					backgroundColor: 'rgba(255, 255, 0, 0.5)',
+					borderColor: 'orange',
+					borderWidth: 1
+				},
+				{
+					label: 'Week 4',
+					data: [5, 3, 2, 7, 8],
+					backgroundColor: 'rgba(0, 255, 0, 0.5)',
+					borderColor: 'purple',
+					borderWidth: 1
+				},
+				{
+					label: 'Week 5',
+					data: [4, 2, 1, 6, 7],
+					backgroundColor: 'rgba(0, 0, 255, 0.5)',
+					borderColor: 'green',
+					borderWidth: 1
+				},
+				{
+					label: 'Week 6',
+					data: [6, 4, 3, 8, 9],
+					backgroundColor: 'rgba(128, 0, 128, 0.5)',
+					borderColor: 'pink',
+					borderWidth: 1
+				},
+				{
+					label: 'Week 7',
+					data: [5, 3, 2, 7, 8],
+					backgroundColor: 'rgba(0, 0, 0, 0.5)',
+					borderColor: 'blue',
+					borderWidth: 1
+				}
+			]
+		};
+
+		// Create the chart
+		var ctx = document.getElementById('myChart').getContext('2d');
+		var myChart = new Chart(ctx, {
+			type: 'heatmap',
+			data: data,
+			options: {
+				scales: {
+					xAxes: [{
+						scaleLabel: {
+							display: true,
+							labelString: 'Day of the Week'
+						}
+					}],
+					yAxes: [{
+						scaleLabel: {
+							display: true,
+							labelString: 'Week Number'
+						}
+					}]
+				},
+				title: {
+					display: true,
+					text: 'Number of Questions Solved'
+				},
+				legend: {
+					display: true,
+					position: 'bottom'
+				}
+			}
+		});
+	</script>
+</body>
+</html>
+
+
+
