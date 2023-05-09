@@ -16,6 +16,8 @@ let handle1 = params.handle; // "some_value"
         const ratings = {};
         const accepted = new Set();
         const tried = new Set();
+  
+        const problem_counted = {};
         // Levels of the user
         let problem_count = {
           A: 0,
@@ -30,6 +32,12 @@ let handle1 = params.handle; // "some_value"
           total = total+1;
 
           tried.add(submission.problem.contestId + '-' + submission.problem.index);
+
+          const ques = submission.problem.contestId + '-' + submission.problem.index;
+          if(problem_counted[ques])
+            problem_counted[ques]++;
+          else
+            problem_counted[ques] = 1;
 
           if (submission.verdict === 'OK') {
 
@@ -70,6 +78,7 @@ let handle1 = params.handle; // "some_value"
 
         
         }
+
         
         
         let labels = Object.keys(problem_count);
@@ -191,6 +200,14 @@ let handle1 = params.handle; // "some_value"
           }
         });
 
+        //question solved with one attempt
+        let once = 0;
+        for(let ques of accepted){
+          if(problem_counted[ques]==1)
+            once++;
+        }
+        document.getElementById('once-value').textContent = once + '(' + ((once/accepted.size)*100).toFixed(2) + '%)';
+
 
         const solved = accepted.size;
         const countElement = document.getElementById('solved-value');
@@ -214,23 +231,38 @@ let handle1 = params.handle; // "some_value"
       var maxRatingUp = 0;
       var maxRatingDown = 0;
       var contests = 0;
+      var minRank = 100000,maxRank = -1;
       for(let RatingChange of data.result){
         contests++;
         maxRatingUp = Math.max(maxRatingUp,Math.max(RatingChange.newRating-RatingChange.oldRating,0));
         maxRatingDown = Math.max(maxRatingDown,Math.max(0,RatingChange.oldRating-RatingChange.newRating));
+        maxRank = Math.max(maxRank,RatingChange.rank);
+        minRank = Math.min(minRank,RatingChange.rank);
       }
-      console.log(maxRatingUp);
 
       const maxup = document.getElementById('chadai-value');
-      maxup.textContent = maxRatingUp;
+      if(maxRatingUp!=0)
+        maxup.textContent = maxRatingUp;
+      else
+        maxup.textContent = '---';
 
       const maxdown = document.getElementById('girna-value');
-      maxdown.textContent = -maxRatingDown;
+      if(maxRatingDown!=0)
+        maxdown.textContent = -maxRatingDown;
+      else
+        maxdown.textContent = '---';
 
       document.getElementById('contest-value').textContent = contests;
 
-      // if(contests==0)
-
+      if(contests==0){
+        document.getElementById('best-value').textContent = '---';
+        document.getElementById('worst-value').textContent = '---';
+      }
+      else
+      {
+        document.getElementById('best-value').textContent = minRank;
+        document.getElementById('worst-value').textContent = maxRank;
+      }
 
     })
     .catch(error => console.error(error));
