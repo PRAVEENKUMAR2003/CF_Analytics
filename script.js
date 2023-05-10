@@ -1,29 +1,23 @@
-// const { Chart } = require("chart.js");
-
-console.log("SCRIPT.jS FILE loaded");
 
 const params = new Proxy(new URLSearchParams(window.location.search), {
   get: (searchParams, prop) => searchParams.get(prop),
 });
-// Get the value of "some_key" in eg "https://example.com/?some_key=some_value"
+
 let handle1 = params.handle; // "some_value"
-console.log(handle1);
 
-// const displayCF = () => {
-  console.log("DisplayCF method executed")
-  // const handle = document.getElementById('input-handle').value;
-  // console.log(handle);
-
-  const api_url = `https://codeforces.com/api/user.status?handle=${handle1}&from=1&count=100000`;
-  
+  const api_url = `https://codeforces.com/api/user.status?handle=${handle1}&from=1&count=1000000`;
   fetch(api_url)
   .then(response => response.json())
   .then(data => {
-    
-    const tags = {};
+
+        const tags = {};
         const language = {};
         const verdicts = {};
         const ratings = {};
+        const accepted = new Set();
+        const tried = new Set();
+  
+        const problem_counted = {};
         // Levels of the user
         let problem_count = {
           A: 0,
@@ -33,10 +27,21 @@ console.log(handle1);
           E: 0,
           F: 0,
         };
-        
+        var total = 0;
         for (let submission of data.result) {
+          total = total+1;
+
+          tried.add(submission.problem.contestId + '-' + submission.problem.index);
+
+          const ques = submission.problem.contestId + '-' + submission.problem.index;
+          if(problem_counted[ques])
+            problem_counted[ques]++;
+          else
+            problem_counted[ques] = 1;
+
           if (submission.verdict === 'OK') {
 
+            accepted.add(submission.problem.contestId + '-' + submission.problem.index);
             //Tags of the user
             submission.problem.tags.forEach((tag) => {
               tags[tag] = (tags[tag] || 0) + 1;
@@ -73,7 +78,7 @@ console.log(handle1);
 
         
         }
-        console.log(language);
+
         
         
         let labels = Object.keys(problem_count);
@@ -132,23 +137,7 @@ console.log(handle1);
               datasets: [{
                     label: 'Problems Solved',
                     data: TagData,
-                    // backgroundColor: [
-                    //   'rgba(255, 99, 132, 0.2)',
-                    //   'rgba(54, 162, 235, 0.2)',
-                    //   'rgba(255, 206, 86, 0.2)',
-                    //   'rgba(75, 192, 192, 0.2)',
-                    //   'rgba(153, 102, 255, 0.2)',
-                    //   'rgba(255, 159, 64, 0.2)'
-                    // ],
-                    // borderColor: [
-                    //   'rgba(255, 99, 132, 1)',
-                    //   'rgba(54, 162, 235, 1)',
-                    //   'rgba(255, 206, 86, 1)',
-                    //   'rgba(75, 192, 192, 1)',
-                    //   'rgba(153, 102, 255, 1)',
-                    //   'rgba(255, 159, 64, 1)'
-                    // ],
-                    // borderWidth: 1
+                    
                   }]
 
 
@@ -166,29 +155,9 @@ console.log(handle1);
             data : {
               labels: LangLabel,
                 datasets: [{
-                  // label: 'Problems Solved',
                     data: LangData,
                     radius: '60%',
-                    // borderAlign: 'inner',
-                    // animateScale: true,
                     
-                    // backgroundColor: [
-                      //   'rgba(255, 99, 132, 0.2)',
-                    //   'rgba(54, 162, 235, 0.2)',
-                    //   'rgba(255, 206, 86, 0.2)',
-                    //   'rgba(75, 192, 192, 0.2)',
-                    //   'rgba(153, 102, 255, 0.2)',
-                    //   'rgba(255, 159, 64, 0.2)'
-                    // ],
-                    // borderColor: [
-                    //   'rgba(255, 99, 132, 1)',
-                    //   'rgba(54, 162, 235, 1)',
-                    //   'rgba(255, 206, 86, 1)',
-                    //   'rgba(75, 192, 192, 1)',
-                    //   'rgba(153, 102, 255, 1)',
-                    //   'rgba(255, 159, 64, 1)'
-                    // ],
-                    // borderWidth: 1
                   }]
 
 
@@ -231,10 +200,69 @@ console.log(handle1);
           }
         });
 
+        //question solved with one attempt
+        let once = 0;
+        for(let ques of accepted){
+          if(problem_counted[ques]==1)
+            once++;
+        }
+        document.getElementById('once-value').textContent = once + '(' + ((once/accepted.size)*100).toFixed(2) + '%)';
 
-        
+
+        const solved = accepted.size;
+        const countElement = document.getElementById('solved-value');
+        countElement.textContent = solved;
+
+        const triednum = tried.size;
+        const ctelt = document.getElementById('tried-value');
+        ctelt.textContent = triednum;
+
+        const avnum = document.getElementById('average-value');
+        avnum.textContent = (total/solved).toFixed(2);
         
       })
       .catch(error => console.error(error));
 
-    // }
+    const api_url1 = 'https://codeforces.com/api/user.rating?handle='+handle1;
+    fetch(api_url1)
+    .then(response => response.json())
+    .then(data => {
+    
+      var maxRatingUp = 0;
+      var maxRatingDown = 0;
+      var contests = 0;
+      var minRank = 100000,maxRank = -1;
+      for(let RatingChange of data.result){
+        contests++;
+        maxRatingUp = Math.max(maxRatingUp,Math.max(RatingChange.newRating-RatingChange.oldRating,0));
+        maxRatingDown = Math.max(maxRatingDown,Math.max(0,RatingChange.oldRating-RatingChange.newRating));
+        maxRank = Math.max(maxRank,RatingChange.rank);
+        minRank = Math.min(minRank,RatingChange.rank);
+      }
+
+      const maxup = document.getElementById('chadai-value');
+      if(maxRatingUp!=0)
+        maxup.textContent = maxRatingUp;
+      else
+        maxup.textContent = '---';
+
+      const maxdown = document.getElementById('girna-value');
+      if(maxRatingDown!=0)
+        maxdown.textContent = -maxRatingDown;
+      else
+        maxdown.textContent = '---';
+
+      document.getElementById('contest-value').textContent = contests;
+
+      if(contests==0){
+        document.getElementById('best-value').textContent = '---';
+        document.getElementById('worst-value').textContent = '---';
+      }
+      else
+      {
+        document.getElementById('best-value').textContent = minRank;
+        document.getElementById('worst-value').textContent = maxRank;
+      }
+
+    })
+    .catch(error => console.error(error));
